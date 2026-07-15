@@ -15,4 +15,39 @@ model User {
   role         String   @default("buyer")
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+
+  artistProfile ArtistProfile?
+}
+
+model ArtistProfile {
+  id            String   @id @default(uuid())
+  userId        String   @unique
+  user          User     @relation(fields: [userId], references: [id])
+
+  bio           String?
+  country       String
+  currency      String   @default("USD")
+  portfolioUrls String[]
+
+  acceptingCommissions Boolean @default(true)
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  pricingTiers  PricingTier[]
+}
+
+model PricingTier {
+  id              String   @id @default(uuid())
+  artistProfileId String
+  artistProfile   ArtistProfile @relation(fields: [artistProfileId], references: [id])
+
+  name            String
+  flexibility     String
+  price           Int
+  revisionRounds  Int      @default(0)
+  description     String?
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }

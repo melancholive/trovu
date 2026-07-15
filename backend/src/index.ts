@@ -4,6 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import usersRouter from './routes/users';
 import authRoutes from "./routes/auth";
+import artistsRouter from "./routes/artists";
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ const port = process.env.PORT || 4000;
 app.use(cors());
 app.use(express.json());
 app.use("/auth", authRoutes);
+app.use("/artists", artistsRouter);
 
 app.get('/', (req, res) => {
   res.json({ message: 'Trovu API is running' });
