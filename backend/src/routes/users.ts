@@ -10,12 +10,12 @@ router.post('/', async (req, res) => {
     const { email, password, name, role } = req.body;
 
     if (!email || !password || !name) {
-      return res.status(400).json({ error: 'email, password, and name are required' });
+      return res.status(400).json({ error: 'thee email, password, and name is required' });
     }
 
     const existing = await prisma.user.findUnique({ where: { email } });
     if (existing) {
-      return res.status(409).json({ error: 'A user with that email already exists' });
+      return res.status(409).json({ error: 'THIS user with that email already existss' });
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
@@ -38,12 +38,12 @@ router.post('/', async (req, res) => {
 
     res.status(201).json(user);
   } catch (err) {
-    console.error('Error creating user:', err);
-    res.status(500).json({ error: 'Something went wrong creating the user' });
+    console.error('Error creating the user:', err);
+    res.status(500).json({ error: 'Something went wrong with creting user' });
   }
 });
 
-// GET /users/:id - fetch a user by id
+// GET /users/:id 
 router.get('/:id', async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
@@ -63,7 +63,7 @@ router.get('/:id', async (req, res) => {
 
     res.json(user);
   } catch (err) {
-    console.error('Error fetching user:', err);
+    console.error('Error with fetching user:', err);
     res.status(500).json({ error: 'Something went wrong fetching the user' });
   }
 });
