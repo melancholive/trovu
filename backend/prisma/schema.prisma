@@ -16,7 +16,8 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  artistProfile ArtistProfile?
+  artistProfile    ArtistProfile?
+  buyerCommissions Commission[]   @relation("BuyerCommissions")
 }
 
 model ArtistProfile {
@@ -35,6 +36,7 @@ model ArtistProfile {
   updatedAt     DateTime @updatedAt
 
   pricingTiers  PricingTier[]
+  commissions   Commission[]
 }
 
 model PricingTier {
@@ -50,4 +52,47 @@ model PricingTier {
 
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+
+  commissions     Commission[]
+}
+
+model Commission {
+  id              String   @id @default(uuid())
+
+  buyerId         String
+  buyer           User     @relation("BuyerCommissions", fields: [buyerId], references: [id])
+
+  artistProfileId String
+  artistProfile   ArtistProfile @relation(fields: [artistProfileId], references: [id])
+
+  pricingTierId   String
+  pricingTier     PricingTier   @relation(fields: [pricingTierId], references: [id])
+
+  brief           String
+  referenceUrls   String[]
+
+  agreedPrice     Int
+  revisionRounds  Int
+
+  status          String   @default("pending")
+  paymentStatus   String   @default("unpaid")
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  milestones      Milestone[]
+}
+
+model Milestone {
+  id            String   @id @default(uuid())
+  commissionId  String
+  commission    Commission @relation(fields: [commissionId], references: [id])
+
+  stage         String
+  imageUrl      String?
+  status        String   @default("pending")
+  feedback      String?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }

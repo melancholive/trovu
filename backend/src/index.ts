@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import usersRouter from './routes/users';
 import authRoutes from "./routes/auth";
 import artistsRouter from "./routes/artists";
+import commissionsRouter from "./routes/commissions";
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/auth", authRoutes);
 app.use("/artists", artistsRouter);
+app.use("/commissions", commissionsRouter);
 
 app.get('/', (req, res) => {
   res.json({ message: 'Trovu API is running' });
