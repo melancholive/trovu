@@ -6,6 +6,7 @@ import usersRouter from './routes/users';
 import authRoutes from "./routes/auth";
 import artistsRouter from "./routes/artists";
 import commissionsRouter from "./routes/commissions";
+import milestonesRouter from "./routes/milestones";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use("/auth", authRoutes);
 app.use("/artists", artistsRouter);
 app.use("/commissions", commissionsRouter);
+app.use("/commissions", milestonesRouter);
 
 app.get('/', (req, res) => {
   res.json({ message: 'Trovu API is running' });

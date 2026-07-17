@@ -81,6 +81,7 @@ model Commission {
   updatedAt       DateTime @updatedAt
 
   milestones      Milestone[]
+  revisionsUsed   Int      @default(0)
 }
 
 model Milestone {
